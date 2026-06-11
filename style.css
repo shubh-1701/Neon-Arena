@@ -1,289 +1,334 @@
+/* Hacker Terminal Theme */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
 :root {
-    --bg-color: #0b0c10;
-    --text-main: #c5c6c7;
-    --neon-blue: #66fcf1;
-    --neon-blue-dim: #45a29e;
-    --neon-red: #ff0055;
-    --neon-purple: #b800ff;
-    --neon-green: #00ff66;
-    --neon-yellow: #ffcc00;
-    --panel-bg: rgba(11, 12, 16, 0.85);
+    --bg-color: #050505;
+    --term-green: #00ff41;
+    --term-dark-green: #008f11;
+    --term-red: #ff003c;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Outfit', sans-serif;
     user-select: none;
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--text-main);
-    overflow: hidden; /* Prevent scrolling */
+    color: var(--term-green);
+    font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+}
+
+/* CRT Effect Overlay */
+.crt::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 100;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+.crt {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    z-index: 100;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.95; }
+    50% { opacity: 1; }
+    100% { opacity: 0.98; }
 }
 
 #game-container {
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: 1200px; /* Optional constraint for wide screens */
+    max-width: 1200px;
     max-height: 800px;
-    background: radial-gradient(circle at center, #1a1c23 0%, var(--bg-color) 100%);
-    box-shadow: 0 0 50px rgba(102, 252, 241, 0.1);
+    background: #000;
+    box-shadow: 0 0 20px var(--term-dark-green);
+    border: 1px solid var(--term-dark-green);
     overflow: hidden;
 }
 
-canvas {
-    display: block;
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 }
 
+/* UI Overlays */
 #ui-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Let clicks pass through to canvas when needed */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    pointer-events: none;
 }
 
-/* --- HUD --- */
-#hud {
+.panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px solid var(--term-green);
+    box-shadow: 0 0 10px var(--term-green);
+    padding: 30px;
+    border-radius: 4px;
+    text-align: center;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 400px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--term-green);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Glitch Effect on Title */
+.glitch {
+    position: relative;
+}
+.glitch::before, .glitch::after {
+    content: attr(data-text);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    background: rgba(0, 20, 0, 0.8);
+}
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+@keyframes glitch-anim {
+    0% { clip: rect(10px, 9999px, 83px, 0); }
+    20% { clip: rect(61px, 9999px, 7px, 0); }
+    40% { clip: rect(93px, 9999px, 81px, 0); }
+    60% { clip: rect(74px, 9999px, 66px, 0); }
+    80% { clip: rect(14px, 9999px, 91px, 0); }
+    100% { clip: rect(4px, 9999px, 97px, 0); }
+}
+@keyframes glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    20% { clip: rect(3px, 9999px, 13px, 0); }
+    40% { clip: rect(9px, 9999px, 66px, 0); }
+    60% { clip: rect(89px, 9999px, 21px, 0); }
+    80% { clip: rect(24px, 9999px, 95px, 0); }
+    100% { clip: rect(8px, 9999px, 49px, 0); }
+}
+
+/* Buttons */
+.glow-btn {
+    background: transparent;
+    color: var(--term-green);
+    border: 1px solid var(--term-green);
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 5px rgba(0, 255, 65, 0.2), 0 0 5px rgba(0, 255, 65, 0.2);
+}
+
+.glow-btn:hover {
+    background: var(--term-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--term-green);
+}
+
+/* HUD */
+#hud {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
+    gap: 10px;
 }
 
 .top-bar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
     width: 100%;
-}
-
-.xp-bar-container {
-    flex-grow: 1;
-    height: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    border: 1px solid rgba(102, 252, 241, 0.3);
-}
-
-#xp-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--neon-blue-dim), var(--neon-blue));
-    box-shadow: 0 0 10px var(--neon-blue);
-    transition: width 0.2s ease-out;
-}
-
-.level-indicator {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--neon-blue);
-    text-shadow: 0 0 10px var(--neon-blue-dim);
+    gap: 20px;
 }
 
 .stats-bar {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    width: 100%;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .health-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.health-bar-bg {
     width: 200px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    border: 1px solid rgba(255, 0, 85, 0.3);
-    overflow: hidden;
+    height: 15px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid var(--term-red);
 }
 
 #health-bar {
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, #aa0033, var(--neon-red));
-    box-shadow: 0 0 10px var(--neon-red);
-    transition: width 0.2s ease-out;
+    background: var(--term-red);
+    box-shadow: 0 0 10px var(--term-red);
+    transition: width 0.1s;
 }
 
-/* --- Panels (Start, Game Over, Level Up) --- */
-.panel {
-    background: var(--panel-bg);
-    border: 2px solid var(--neon-blue-dim);
-    border-radius: 16px;
-    padding: 40px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 30px rgba(102, 252, 241, 0.2);
-    pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    animation: fadeIn 0.3s ease-out;
+.xp-bar-container {
+    flex-grow: 1;
+    height: 15px;
+    background: rgba(0, 255, 65, 0.2);
+    border: 1px solid var(--term-green);
 }
 
-.panel h1 {
-    font-size: 3rem;
-    color: var(--neon-blue);
-    text-shadow: 0 0 15px var(--neon-blue);
-    letter-spacing: 2px;
+#xp-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--term-green);
+    box-shadow: 0 0 10px var(--term-green);
+    transition: width 0.2s;
 }
 
-.panel h2 {
-    font-size: 2.5rem;
-    color: var(--neon-blue);
-}
-
-.panel h2.text-danger {
-    color: var(--neon-red);
-    text-shadow: 0 0 15px var(--neon-red);
-}
-
-.panel h2.text-success {
-    color: var(--neon-green);
-    text-shadow: 0 0 15px var(--neon-green);
-}
-
-.glow-btn {
-    background: transparent;
-    color: var(--neon-blue);
-    border: 2px solid var(--neon-blue);
-    padding: 15px 40px;
+.level-indicator {
+    font-weight: bold;
     font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: var(--term-green);
 }
 
-.glow-btn:hover {
-    background: var(--neon-blue);
-    color: var(--bg-color);
-    box-shadow: 0 0 20px var(--neon-blue);
-    transform: scale(1.05);
-}
-
-.glow-btn:active {
-    transform: scale(0.95);
-}
-
-/* --- Upgrades Grid --- */
+/* Upgrades / Level Select Grid */
 .upgrades-grid {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin-top: 20px;
 }
 
 .upgrade-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px solid var(--term-green);
     padding: 20px;
     width: 200px;
     cursor: pointer;
     transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    text-align: center;
 }
 
 .upgrade-card:hover {
-    border-color: var(--neon-purple);
-    box-shadow: 0 0 15px rgba(184, 0, 255, 0.4);
-    transform: translateY(-5px);
-    background: rgba(184, 0, 255, 0.1);
+    background: var(--term-green);
+    color: #000;
+    transform: scale(1.05);
+}
+.upgrade-card:hover h3, .upgrade-card:hover p {
+    color: #000;
 }
 
 .upgrade-card h3 {
-    color: var(--neon-yellow);
     font-size: 1.2rem;
+    color: var(--term-green);
 }
 
 .upgrade-card p {
     font-size: 0.9rem;
-    color: #aaa;
+    color: var(--term-dark-green);
 }
 
 .upgrade-card.locked {
-    opacity: 0.4;
+    opacity: 0.5;
     pointer-events: none;
     border-color: #555;
-    background: rgba(0,0,0,0.5);
 }
-
-.upgrade-card.locked h3 {
+.upgrade-card.locked h3, .upgrade-card.locked p {
     color: #555;
+    text-shadow: none;
 }
 
-/* --- Achievements List Item --- */
+/* Achievements List Item */
 .achievement-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px dashed var(--term-dark-green);
     padding: 15px;
     text-align: left;
     transition: all 0.2s;
 }
 .achievement-item.completed {
-    border-color: var(--neon-green);
-    background: rgba(0, 255, 102, 0.1);
-    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    border-style: solid;
+    border-color: var(--term-green);
+    background: rgba(0, 255, 65, 0.1);
 }
 .achievement-item h3 {
-    color: var(--neon-purple);
+    color: var(--term-dark-green);
     font-size: 1.1rem;
     margin-bottom: 5px;
+    text-shadow: none;
 }
 .achievement-item.completed h3 {
-    color: var(--neon-green);
+    color: var(--term-green);
+    text-shadow: 0 0 5px var(--term-green);
 }
 .achievement-item p {
     font-size: 0.9rem;
     color: #aaa;
 }
 .achievement-reward {
-    font-weight: 700;
-    color: var(--neon-yellow);
+    font-weight: bold;
+    color: var(--term-green);
     text-align: right;
 }
 
-/* --- Utilities --- */
-.hidden {
-    display: none !important;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
+/* Utilities */
+.hidden { display: none !important; }
+.text-danger { color: var(--term-red) !important; text-shadow: 0 0 10px var(--term-red); }
+.text-success { color: var(--term-green) !important; text-shadow: 0 0 10px var(--term-green); }
