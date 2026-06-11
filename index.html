@@ -21,6 +21,7 @@
                         <div id="xp-bar"></div>
                     </div>
                     <div class="level-indicator">Lvl <span id="level-display">1</span></div>
+                    <button id="toggle-sound-btn" class="glow-btn" style="padding: 5px 10px; font-size: 0.8rem; border-color: var(--neon-yellow); color: var(--neon-yellow);">🔊 ON</button>
                 </div>
                 <div class="stats-bar">
                     <div class="health-container">
@@ -69,6 +70,16 @@
                 <div style="display: flex; gap: 20px; margin-top: 20px;">
                     <button id="victory-menu-btn" class="glow-btn" style="border-color: var(--neon-yellow); color: var(--neon-yellow);">MAIN MENU</button>
                     <button id="next-level-btn" class="glow-btn" style="border-color: var(--neon-green); color: var(--neon-green);">NEXT LEVEL</button>
+                </div>
+            </div>
+
+            <!-- Pause Screen -->
+            <div id="pause-screen" class="panel hidden">
+                <h2 style="color: var(--neon-yellow); text-shadow: 0 0 15px var(--neon-yellow);">PAUSED</h2>
+                <p>Press ESC to Resume</p>
+                <div style="display: flex; gap: 20px; margin-top: 20px;">
+                    <button id="resume-btn" class="glow-btn" style="border-color: var(--neon-blue); color: var(--neon-blue);">RESUME</button>
+                    <button id="quit-btn" class="glow-btn" style="border-color: var(--neon-red); color: var(--neon-red);">QUIT TO MENU</button>
                 </div>
             </div>
 
